@@ -1,0 +1,15 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=bm90ZSBvdmVyIGJyb3dzZXI6CnJlZHJhd05vdGVzKCkgaXMgY2FsbGVkLCByZW5kZXJpbmcKdGhlIAA1BXRoYXQgd2FzIGp1c3Qgc3VibW1pdGVkIGJ5AB8FdXNlcgplbmQAKAUKCgBaE3NlbmRUb1NlcnZlcihub3RlAGUNc2VuZABiDm8gdGhlIHMAKwUATwsKAIE3By0-ABUGOiBIVFRQIFBPU1QgaHR0cHM6Ly9zdHVkaWVzLmNzLmhlbHNpbmtpLmZpL2V4YW1wbGVhcHAvbmV3X25vdGVfc3BhCg&s=default
+
+note over browser:
+redrawNotes() is called, rendering
+the note that was just submmited by
+the user
+end note
+
+note over browser:
+sendToServer(note) is called, sending
+the note to the server
+end note
+
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
