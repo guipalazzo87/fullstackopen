@@ -1,0 +1,24 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=YnJvd3Nlci0-c2VydmVyOiBIVFRQIEdFVCBodHRwczovL3N0dWRpZXMuY3MuaGVsc2lua2kuZmkvZXhhbXBsZWFwcC9zcGEKADkGLS0-AEoHOiBIVE1MIGNvZGUKACBEbWFpbi5jc3MAVhMAEgkAgQVHLmoATRlqcwoKbm90ZSBvdmVyIACBYwgAgVkIIHN0YXJ0cyBleGVjdXRpbmcALQgsCgAJCmxpbmUgeGh0dHAub3BlbigiR0VUIiwgIgCCRQxkYXRhLmpzb24iLCB0cnVlKSwKdGhhdCByZXF1ZXN0cyBKU09OIGRhdGEgZnJvbSAAgzYGIAplbmQgbm90ZQCBCB1yZWNlaXZlcyB0aGUAPwUAZQUgYW5kIGEgZnVuY3Rpb24KdG8gcmVkcmF3Tm90ZXMoKSBpcyBjYWxsZWQsIHBhcnNpbmcALgVkaXNwbGF5aW5nIHRoZQpuZXdseSBhcnJpdmUAgQYGcwCBHQZ0aGUAgSAHAIEbCwCDYDpmYXZpY29uLmljbwCEaBMAEgwKCgoK&s=default
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server-->browser: HTML code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing main.js,
+executing line xhttp.open("GET", "/exampleapp/data.json", true),
+that requests JSON data from server 
+end note
+
+note over browser:
+browser receives the data.json and a function
+to redrawNotes() is called, parsing and displaying the
+newly arrived notes from the server
+end note
+
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+server-->browser: favicon.ico
