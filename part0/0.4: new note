@@ -1,1 +1,31 @@
+https://www.websequencediagrams.com/cgi-bin/cdraw?lz=YnJvd3Nlci0-c2VydmVyOiBIVFRQIFBPU1QgaHR0cHM6Ly9zdHVkaWVzLmNzLmhlbHNpbmtpLmZpL2V4YW1wbGVhcHAvbmV3X25vdGUKbm90ZSBvdmVyIABIBwoAUQYgYWRkcyB0aGUAVAYKInBheWxvYWQiIHRvABIFbGlzdAplbmQgAEIFCgCBABZHRQBoLW90ZXMAeQctLT4AgWIHOiBIVE1MIGNvZGUAIUVtYWluLmNzAFUUABIJAB9JagBOGWpzCgCCcgsAgWQIAIJACCBzdGFydHMgZXhlY3V0aW5nIGpzLQCBfgV0aGF0IHJlcXVlc3RzIEpTT04gZGF0YSBmcm9tAIM9ByAAgklPZGF0YS5qc29uAIMJE1t7ImNvbnRlbnQiOiJraiIsImRhdGUiOiIyMDIxLTAzLTI1VDE4OjQ3OjM4LjQxMVoifSwgLi4uXQCBYR0AgXEGZQCEewZldmVudCBoYW5kbGVyCmluAII4CCAAggQHbmRlcnMAhQIFcyB0byBkaXNwbGF5AIRYRGZhdmljb24uaWNvAIUEEwASDAo&s=default
 
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note over server:
+server adds the POST 
+"payload" to the list
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server-->browser: HTML code
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server-->browser: main.js
+
+note over browser:
+browser starts executing js-code
+that requests JSON data from server 
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server-->browser: [{"content":"kj","date":"2021-03-25T18:47:38.411Z"}, ...]
+
+note over browser:
+browser executes the event handler
+in main.js that renders notes to display
+end note
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+server-->browser: favicon.ico
