@@ -147,7 +147,8 @@ const Numbers = (props) => {
 
   const personDelete = (e) => {
 
-    const personObj = props.persons.filter(x => x.id == e.target.value)
+    
+    const personObj = props.persons.filter(x => x.id === Number(e.target.value))
     const result = window.confirm(`Delete entry for ${personObj[0].name}?`);
 
     if (result) {
