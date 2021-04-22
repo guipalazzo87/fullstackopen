@@ -85,6 +85,14 @@ const AddNew = (props) => {
               props.setSuccessMessage(null)
             }, 5000)
           })
+          .catch(error => {
+            props.setNewName('')
+            props.setNewNumber('')
+            props.setErrorMessage(`Couldn't update entry for ${entry.name}.`)
+            setTimeout(() => {
+              props.setErrorMessage(null)
+            }, 5000)
+          })
       } else {
         props.setNewName('')
         props.setNewNumber('')
@@ -147,7 +155,7 @@ const Numbers = (props) => {
 
   const personDelete = (e) => {
 
-    
+
     const personObj = props.persons.filter(x => x.id === Number(e.target.value))
     const result = window.confirm(`Delete entry for ${personObj[0].name}?`);
 
@@ -170,92 +178,85 @@ const Numbers = (props) => {
             .then(initialPersons => {
               props.setPersons(initialPersons)
             })
-            setTimeout(() => {
-              props.setErrorMessage(null)
-            }, 5000)
+          setTimeout(() => {
+            props.setErrorMessage(null)
+          }, 5000)
         })
-      }}
-    
-  
-
-
-
-
+    }
+  }
 
   return (
-        <div>
-          <h2>Numbers</h2>
-          <ul>
-            {match.map(person =>
-              <li key={person.id}>{person.name} {person.number ? person.number : "no number"}
-                <button value={person.id}
-                  onClick={personDelete} >Delete</button>
-              </li>
-            )}
-          </ul>
-        </div>
+    <div>
+      <h2>Numbers</h2>
+      <ul>
+        {match.map(person =>
+          <li key={person.id}>{person.name} {person.number ? person.number : "no number"}
+            <button value={person.id}
+              onClick={personDelete} >Delete</button>
+          </li>
+        )}
+      </ul>
+    </div>
+  )
+}
+
+const App = () => {
+  const [persons, setPersons] = useState([])
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+  const [newSearch, setNewSearch] = useState('')
+  const [newMatch, setNewMatch] = useState('')
+  const [successMessage, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
 
-      )
-    }
+  useEffect(() => {
+    personsService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
+      })
+  }, [])
 
-    const App = () => {
-      const [persons, setPersons] = useState([])
-      const [newName, setNewName] = useState('')
-      const [newNumber, setNewNumber] = useState('')
-      const [newSearch, setNewSearch] = useState('')
-      const [newMatch, setNewMatch] = useState('')
-      const [successMessage, setSuccessMessage] = useState(null)
-      const [errorMessage, setErrorMessage] = useState(null)
+  return (
+    <div>
+      <h2>Phonebook</h2>
 
-
-      useEffect(() => {
-        personsService
-          .getAll()
-          .then(initialPersons => {
-            setPersons(initialPersons)
-          })
-      }, [])
-
-      return (
-        <div>
-          <h2>Phonebook</h2>
-
-          <NotificationErr message={errorMessage} />
-          <NotificationSucc message={successMessage} />
+      <NotificationErr message={errorMessage} />
+      <NotificationSucc message={successMessage} />
 
 
 
-          <FilterFields persons={persons}
-            newSearch={newSearch}
-            setNewSearch={setNewSearch}
-            newMatch={newMatch}
-            setNewMatch={setNewMatch}
-          />
+      <FilterFields persons={persons}
+        newSearch={newSearch}
+        setNewSearch={setNewSearch}
+        newMatch={newMatch}
+        setNewMatch={setNewMatch}
+      />
 
-          <AddNew persons={persons}
-            setPersons={setPersons}
-            newName={newName}
-            setNewName={setNewName}
-            newNumber={newNumber}
-            setNewNumber={setNewNumber}
-            successMessage={successMessage}
-            setSuccessMessage={setSuccessMessage}
-            errorMessage={errorMessage}
-            setErrorMessage={setErrorMessage}
-          />
+      <AddNew persons={persons}
+        setPersons={setPersons}
+        newName={newName}
+        setNewName={setNewName}
+        newNumber={newNumber}
+        setNewNumber={setNewNumber}
+        successMessage={successMessage}
+        setSuccessMessage={setSuccessMessage}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
 
-          <Numbers persons={persons}
-            setPersons={setPersons}
-            newSearch={newSearch}
-            successMessage={successMessage}
-            setSuccessMessage={setSuccessMessage}
-            errorMessage={errorMessage}
-            setErrorMessage={setErrorMessage}
-          />
+      <Numbers persons={persons}
+        setPersons={setPersons}
+        newSearch={newSearch}
+        successMessage={successMessage}
+        setSuccessMessage={setSuccessMessage}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
 
-        </div>
-      )
-    }
+    </div>
+  )
+}
 
-    export default App
+export default App
