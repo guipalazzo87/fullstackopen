@@ -1,139 +1,146 @@
-import React, { useState, useEffect } from 'react'
-import personsService from './services/persons'
-
+import React, { useState, useEffect } from 'react';
+import personsService from './services/persons';
 
 const NotificationErr = ({ message }) => {
   if (message === null) {
-    return null
+    return null;
   }
 
   return (
     <div className="error">
       {message}
     </div>
-  )
-}
+  );
+};
 
 const NotificationSucc = ({ message }) => {
   if (message === null) {
-    return null
+    return null;
   }
 
   return (
     <div className="success">
       {message}
     </div>
-  )
-}
+  );
+};
 
 const FilterFields = (props) => {
   const search = (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
   const handleSearchChange = (event) => {
-    props.setNewSearch(event.target.value)
-  }
+    props.setNewSearch(event.target.value);
+  };
 
   return (
     <>
       <form onSubmit={search}>
         <div>
-          filter: <input
+          filter:
+          {' '}
+          <input
             value={props.newSearch}
             onChange={handleSearchChange}
           />
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
 const AddNew = (props) => {
-
   const addName = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const maxId = props.persons.reduce(
-      (max, person) => (person.id > max ? person.id : max),
-      0)
+    // const maxId = props.persons.reduce(
+    //   (max, person) => (person.id > max ? person.id : max),
+    //   0)
 
     const entry = {
       name: props.newName,
       number: props.newNumber,
-      id: maxId + 1,
-    }
+      // id: maxId + 1,
+    };
 
-    const map1 = props.persons.map(x => x.name)
+    const map1 = props.persons.map((x) => x.name);
 
     if (map1.includes(entry.name)) {
-
       const result = window.confirm(`${entry.name} is already in phonebook. Update its number?`);
 
       if (result) {
-        const personObj = props.persons.filter(x => x.name === entry.name)
+        const personObj = props.persons.filter((x) => x.name === entry.name);
         personsService
           .update(personObj[0].id, entry)
-          .then(returnedPerson => {
+          .then((returnedPerson) => {
             personsService.getAll()
-              .then(initialPersons => {
-                props.setPersons(initialPersons)
-              })
-            props.setNewName('')
-            props.setNewNumber('')
-            props.setSuccessMessage(`${personObj[0].name} successfully updated.`)
+              .then((initialPersons) => {
+                props.setPersons(initialPersons);
+              });
+            props.setNewName('');
+            props.setNewNumber('');
+            props.setSuccessMessage(`${personObj[0].name} successfully updated.`);
             setTimeout(() => {
-              props.setSuccessMessage(null)
-            }, 5000)
+              props.setSuccessMessage(null);
+            }, 5000);
           })
-          .catch(error => {
-            props.setNewName('')
-            props.setNewNumber('')
-            props.setErrorMessage(`Couldn't update entry for ${entry.name}.`)
+          .catch((error) => {
+            props.setNewName('');
+            props.setNewNumber('');
+            props.setErrorMessage(error.response.data.error);
             setTimeout(() => {
-              props.setErrorMessage(null)
-            }, 5000)
-          })
+              props.setErrorMessage(null);
+            }, 5000);
+          });
       } else {
-        props.setNewName('')
-        props.setNewNumber('')
+        props.setNewName('');
+        props.setNewNumber('');
       }
-    }
-    else {
+    } else {
       personsService
         .create(entry)
-        .then(returnedPerson => {
-          props.setPersons(props.persons.concat(returnedPerson))
-          props.setNewName('')
-          props.setNewNumber('')
-          props.setSuccessMessage(`${entry.name} successfully added.`)
+        .then((returnedPerson) => {
+          props.setPersons(props.persons.concat(returnedPerson));
+          props.setNewName('');
+          props.setNewNumber('');
+          props.setSuccessMessage(`${entry.name} successfully added.`);
           setTimeout(() => {
-            props.setSuccessMessage(null)
-          }, 5000)
+            props.setSuccessMessage(null);
+          }, 5000);
         })
+        .catch((error) => {
+          props.setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            props.setErrorMessage(null);
+          }, 5000);
+        });
     }
-  }
+  };
 
   const handleNameChange = (event) => {
-    props.setNewName(event.target.value)
-  }
+    props.setNewName(event.target.value);
+  };
 
   const handleNumberChange = (event) => {
-    props.setNewNumber(event.target.value)
-  }
-
+    props.setNewNumber(event.target.value);
+  };
 
   return (
     <div>
       <h2>Add new</h2>
       <form onSubmit={addName}>
         <div>
-          name: <input
+          name:
+          {' '}
+          <input
             value={props.newName}
             onChange={handleNameChange}
           />
         </div>
         <div>
-          number: <input
+          number:
+          {' '}
+          <input
             value={props.newNumber}
             onChange={handleNumberChange}
           />
@@ -144,19 +151,15 @@ const AddNew = (props) => {
         </div>
       </form>
     </div>
-  )
-
-}
+  );
+};
 
 const Numbers = (props) => {
-
-  let re = new RegExp(props.newSearch + '(.+)?', 'i')
-  const match = props.persons.filter(e => e.name.search(re) !== -1)
+  const re = new RegExp(`${props.newSearch}(.+)?`, 'i');
+  const match = props.persons.filter((e) => e.name.search(re) !== -1);
 
   const personDelete = (e) => {
-
-
-    const personObj = props.persons.filter(x => x.id === Number(e.target.value))
+    const personObj = props.persons.filter((x) => x.id === e.target.value);
     const result = window.confirm(`Delete entry for ${personObj[0].name}?`);
 
     if (result) {
@@ -164,59 +167,65 @@ const Numbers = (props) => {
         .remove(e.target.value)
         .then(() => {
           personsService.getAll()
-            .then(initialPersons => {
-              props.setPersons(initialPersons)
-            })
-          props.setSuccessMessage(`${personObj[0].name} successfully deleted.`)
+            .then((initialPersons) => {
+              props.setPersons(initialPersons);
+            });
+          props.setSuccessMessage(`${personObj[0].name} successfully deleted.`);
           setTimeout(() => {
-            props.setSuccessMessage(null)
-          }, 5000)
+            props.setSuccessMessage(null);
+          }, 5000);
         })
-        .catch(error => {
-          props.setErrorMessage(`${personObj[0].name} was already removed from server.`)
+        .catch((error) => {
+          props.setErrorMessage(`${personObj[0].name} was already removed from server.`);
           personsService.getAll()
-            .then(initialPersons => {
-              props.setPersons(initialPersons)
-            })
+            .then((initialPersons) => {
+              props.setPersons(initialPersons);
+            });
           setTimeout(() => {
-            props.setErrorMessage(null)
-          }, 5000)
-        })
+            props.setErrorMessage(null);
+          }, 5000);
+        });
     }
-  }
+  };
 
   return (
     <div>
       <h2>Numbers</h2>
       <ul>
-        {match.map(person =>
-          <li key={person.id}>{person.name} {person.number ? person.number : "no number"}
-            <button value={person.id}
-              onClick={personDelete} >Delete</button>
+        {match.map((person) => (
+          <li key={person.id}>
+            {person.name}
+            {' '}
+            {person.number ? person.number : 'no number'}
+            <button
+              value={person.id}
+              onClick={personDelete}
+            >
+              Delete
+            </button>
           </li>
-        )}
+        ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
 const App = () => {
-  const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-  const [newSearch, setNewSearch] = useState('')
-  const [newMatch, setNewMatch] = useState('')
-  const [successMessage, setSuccessMessage] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
-
+  const [persons, setPersons] = useState([]);
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [newSearch, setNewSearch] = useState('');
+  const [newMatch, setNewMatch] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personsService
       .getAll()
-      .then(initialPersons => {
-        setPersons(initialPersons)
-      })
-  }, [])
+      .then((initialPersons) => {
+        setPersons(initialPersons);
+      });
+  }, []);
 
   return (
     <div>
@@ -225,16 +234,16 @@ const App = () => {
       <NotificationErr message={errorMessage} />
       <NotificationSucc message={successMessage} />
 
-
-
-      <FilterFields persons={persons}
+      <FilterFields
+        persons={persons}
         newSearch={newSearch}
         setNewSearch={setNewSearch}
         newMatch={newMatch}
         setNewMatch={setNewMatch}
       />
 
-      <AddNew persons={persons}
+      <AddNew
+        persons={persons}
         setPersons={setPersons}
         newName={newName}
         setNewName={setNewName}
@@ -246,7 +255,8 @@ const App = () => {
         setErrorMessage={setErrorMessage}
       />
 
-      <Numbers persons={persons}
+      <Numbers
+        persons={persons}
         setPersons={setPersons}
         newSearch={newSearch}
         successMessage={successMessage}
@@ -256,7 +266,7 @@ const App = () => {
       />
 
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
