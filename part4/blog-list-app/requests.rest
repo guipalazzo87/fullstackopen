@@ -8,17 +8,19 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-  "title": "",
+  "title": "2",
   "author": "author test",
-  "url": "url test new",
-  "likes": 10
+  "url": "url test new"
 }
 
 ###
-PUT http://localhost:3001/api/persons/6085fba14fe2c40c300f5b72 HTTP/1.1
+PUT http://localhost:3003/api/blogs/608a09068f6b264320f4bef7 HTTP/1.1
 content-type: application/json
 
 {
-    "name":"gui",
-    "number":"111111111111111111"
-}
+    "title": "3",
+    "author": "author test",
+    "url": "url test new",
+
+    "id": "6089fbe13e78a0504072a409"
+  }
