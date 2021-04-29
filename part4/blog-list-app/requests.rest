@@ -8,7 +8,7 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-  "title": "title test",
+  "title": "",
   "author": "author test",
   "url": "url test new",
   "likes": 10
