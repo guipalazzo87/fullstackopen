@@ -1,16 +1,39 @@
 GET http://localhost:3003/api/blogs
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzQxNzg0LCJleHAiOjE2MTk3NDUzODR9.dWEp4Aeh8w44myB4AhwJoiQOF--iWGikMjdsv1F7oOE
 
 ###
-DELETE http://localhost:3003/api/blogs/60880826c678a00470eee5cf HTTP/1.1
+
+GET http://localhost:3003/api/blogs/608acde744a96c29c8b3030d
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzQxNzg0LCJleHAiOjE2MTk3NDUzODR9.dWEp4Aeh8w44myB4AhwJoiQOF--iWGikMjdsv1F7oOE
+###
+
+GET http://localhost:3003/api/users
 
 ###
-POST http://localhost:3003/api/blogs HTTP/1.1
+DELETE http://localhost:3003/api/blogs/608b4e3eb665de53b095554c HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwOGFjYzA0YjEyOGJkMjZhMGE2N2NjOSIsImlhdCI6MTYxOTc0NjE1NCwiZXhwIjoxNjE5NzQ5NzU0fQ.hoQsNBJjT7YDMO1ipi2FB8y8C9n_fPD8UNc-_OPnMXs
+
+
+###
+POST http://localhost:3003/api/users HTTP/1.1
 content-type: application/json
 
 {
-  "title": "2",
-  "author": "author test",
-  "url": "url test new"
+    "notes": [],
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
+}
+
+###
+POST http://localhost:3003/api/users HTTP/1.1
+content-type: application/json
+
+{
+    "notes": [],
+    "username": "gui5",
+    "name": "guilherme",
+    "password": "se"
 }
 
 ###
@@ -24,3 +47,45 @@ content-type: application/json
 
     "id": "6089fbe13e78a0504072a409"
   }
+
+###
+
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzQ1MTYwLCJleHAiOjE2MTk3NDg3NjB9.VQpg8hdsy_rCk7Hj6LffKr33oNk9xvwV4QYcrkBYRlk
+
+{
+    "title": "blog added by gui",
+    "author": "random author",
+    "url": "random url",
+    "likes": "500",
+    "userId": "608acc7bb128bd26a0a67ccb"
+}
+
+// THIS SHOULDN'T WORK!!!!!
+// TODO: THIS TOKEN WAS FOR THE GUI USER AND THE USERID INFORMED IN CONTENT
+// IS FROM SUPERSUPER USER, THIS WILL BE FIXED WHEN I CREATE A FUNCTION
+// TO EXTRACT THE USER FROM THE TOKEN, SO NO MORE SENDING USER WITHIN THE
+// REQUEST
+
+###
+
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "gui",
+    "password": "senha123"
+}
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "root",
+    "password": "salainen"
+}
+
+###
+token for gui: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzM3MzMzLCJleHAiOjE2MTk3NDA5MzN9.E411WeqxnAVvlJlX_D-oJuPXjaFyn7DHjptc7Tk_el4
