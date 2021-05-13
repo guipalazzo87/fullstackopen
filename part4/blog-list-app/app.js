@@ -32,6 +32,15 @@ app.use('/api/blogs', middleware.tokenExtractor, middleware.userExtractor, blogs
 app.use('/api/users', middleware.tokenExtractor, usersRouter)
 app.use('/api/login', loginRouter)
 
+// THERE WAS AN ERROR, IF I USED tokenExtractor and userExtractor like above,
+// the token wasn't being passed to backend
+
+
+// app.use('/api/blogs', blogsRouter)
+// app.use('/api/users', usersRouter)
+// app.use('/api/login', loginRouter)
+
+
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

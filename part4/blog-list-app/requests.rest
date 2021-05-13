@@ -1,9 +1,9 @@
 GET http://localhost:3003/api/blogs
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzQxNzg0LCJleHAiOjE2MTk3NDUzODR9.dWEp4Aeh8w44myB4AhwJoiQOF--iWGikMjdsv1F7oOE
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwOGFjYzA0YjEyOGJkMjZhMGE2N2NjOSIsImlhdCI6MTYxOTc5MTgzOSwiZXhwIjoxNjE5Nzk1NDM5fQ.hsCp9VnZpfOHCFJFsEY_eW3hiXY120GaesBnFQPuZ8E
 
 ###
 
-GET http://localhost:3003/api/blogs/608acde744a96c29c8b3030d
+GET http://localhost:3003/api/blogs/
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzQxNzg0LCJleHAiOjE2MTk3NDUzODR9.dWEp4Aeh8w44myB4AhwJoiQOF--iWGikMjdsv1F7oOE
 ###
 
@@ -31,9 +31,9 @@ content-type: application/json
 
 {
     "notes": [],
-    "username": "gui5",
-    "name": "guilherme",
-    "password": "se"
+    "username": "mluukkai1",
+    "name": "mluukkai1",
+    "password": "mluukkai1"
 }
 
 ###
@@ -86,6 +86,15 @@ Content-Type: application/json
     "username": "root",
     "password": "salainen"
 }
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+
+{ "username": "mluukkai1", "password": "mluukkai1" }
+
+
 
 ###
 token for gui: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjE5NzM3MzMzLCJleHAiOjE2MTk3NDA5MzN9.E411WeqxnAVvlJlX_D-oJuPXjaFyn7DHjptc7Tk_el4
