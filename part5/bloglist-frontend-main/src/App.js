@@ -42,12 +42,16 @@ const App = () => {
   };
 
   useEffect(() => {
+    renderBlogs()
+  }, [])
+
+  const renderBlogs = () => {
     blogService
       .getAll()
       .then(initialBlogs =>
-        setBlogs(initialBlogs)
+        setBlogs(initialBlogs.sort((a, b) => b.likes - a.likes))
       )
-  }, [])
+  }
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -69,7 +73,7 @@ const App = () => {
     blogService
       .create(newBlog, user)
       .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
+        renderBlogs()
         setSuccessMessage(`new blog ${returnedBlog.title}, by ${returnedBlog.author}, added to the list`)
         setTimeout(() => {
           setSuccessMessage(null)
@@ -84,6 +88,21 @@ const App = () => {
       })
   }
 
+  const addLike = (blogObject) => {
+    blogService
+      .update(blogObject.id, blogObject)
+      .then(() =>
+        renderBlogs())
+  }
+
+  const removeBlog = (blogObject) => {
+    if (window.confirm(`Delete ${blogObject.title}?`)) {
+      blogService
+        .remove(blogObject.id)
+        .then(() =>
+          renderBlogs())
+    }
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -102,6 +121,7 @@ const App = () => {
       setTimeout(() => {
         setSuccessMessage(null);
       }, 5000);
+      renderBlogs()
     } catch (exception) {
       setErrorMessage(`wrong credentials`)
       setTimeout(() => {
@@ -138,6 +158,7 @@ const App = () => {
       setSuccessMessage(null);
     }, 5000);
     setUser(null)
+    renderBlogs()
   }
 
 
@@ -150,16 +171,14 @@ const App = () => {
         <div>
           <p>{user.name} logged in</p>
           <button type="button" onClick={handleLogout}>Log out</button>
-          here should be blogform:
           {blogForm()}
-          bottom blog form
         </div>
       }
       <div>
         <h2>blogs</h2>
         <ul>
           {blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />)
+            <Blog key={blog.id} blog={blog} blogToUpdate={addLike} blogToDelete={removeBlog} user={user} />)
           }
         </ul>
       </div>

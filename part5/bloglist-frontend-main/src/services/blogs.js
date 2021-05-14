@@ -16,7 +16,6 @@ const getAll = async newObject => {
 }
 
 const create = async newObject => {
-  console.log(newObject);
   try {
     var config = {
       headers: { authorization: `bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}` },  
@@ -28,4 +27,26 @@ const create = async newObject => {
   return response.data
 }
 
-export default { getAll , create}
+const update = (id, newObject) => {
+  try {
+    var config = {
+      headers: { authorization: `bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}` },  
+      }
+  } catch (error) {
+  }
+  const request = axios.put(`${baseUrl}/${id}`, newObject, config)
+  return request.then(response => response.data)
+}
+
+const remove = (id) => {
+  try {
+    var config = {
+      headers: { authorization: `bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}` },  
+      }
+  } catch (error) {
+  }
+  const request = axios.delete(`${baseUrl}/${id}`, config)
+  return request.then(response => response.data)
+}
+
+export default { getAll , create, update, remove}
