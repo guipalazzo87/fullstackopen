@@ -13,6 +13,9 @@ GET http://localhost:3003/api/users
 DELETE http://localhost:3003/api/blogs/608b4e3eb665de53b095554c HTTP/1.1
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwOGFjYzA0YjEyOGJkMjZhMGE2N2NjOSIsImlhdCI6MTYxOTc0NjE1NCwiZXhwIjoxNjE5NzQ5NzU0fQ.hoQsNBJjT7YDMO1ipi2FB8y8C9n_fPD8UNc-_OPnMXs
 
+###
+DELETE http://localhost:3003/api/blogs/609e78378773d33c504b4daf
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imd1aSIsImlkIjoiNjA4YWNjN2JiMTI4YmQyNmEwYTY3Y2NiIiwiaWF0IjoxNjIwOTk4MDE0LCJleHAiOjE2MjEwMDE2MTR9.FbMP0cgNkdIXX2fbGODZrrf0k9lXH33nD8wqEMpO7Og
 
 ###
 POST http://localhost:3003/api/users HTTP/1.1
