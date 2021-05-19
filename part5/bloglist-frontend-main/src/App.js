@@ -8,8 +8,8 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -21,25 +21,25 @@ const App = () => {
 
   const NotErr = ({ message }) => {
     if (message === null) {
-      return null;
+      return null
     }
     return (
       <div className="error">
         {message}
       </div>
-    );
-  };
+    )
+  }
 
   const NotSucc = ({ message }) => {
     if (message === null) {
-      return null;
+      return null
     }
     return (
       <div className="success">
         {message}
       </div>
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     renderBlogs()
@@ -82,8 +82,8 @@ const App = () => {
       .catch(error => {
         setErrorMessage(`Coudn't add to blog list. Error ${error.response.data.error}`)
         setTimeout(() => {
-          setErrorMessage(null);
-        }, 5000);
+          setErrorMessage(null)
+        }, 5000)
         console.log(error)
       })
   }
@@ -119,15 +119,15 @@ const App = () => {
       setPassword('')
       setSuccessMessage(`Successfully logged in as ${user.username}`)
       setTimeout(() => {
-        setSuccessMessage(null);
-      }, 5000);
+        setSuccessMessage(null)
+      }, 5000)
       renderBlogs()
     } catch (exception) {
-      setErrorMessage(`wrong credentials`)
+      setErrorMessage('wrong credentials')
       setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
-      console.log(exception);
+        setErrorMessage(null)
+      }, 5000)
+      console.log(exception)
     }
   }
 
@@ -153,10 +153,10 @@ const App = () => {
   const handleLogout = async (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedBlogappUser')
-    setSuccessMessage(`Successfully logged out`)
+    setSuccessMessage('Successfully logged out')
     setTimeout(() => {
-      setSuccessMessage(null);
-    }, 5000);
+      setSuccessMessage(null)
+    }, 5000)
     setUser(null)
     renderBlogs()
   }
