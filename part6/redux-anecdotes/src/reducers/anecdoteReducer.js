@@ -51,9 +51,12 @@ export const createAnecdote = (content) => {
   }
 }
 
-export const vote = (id) => {
+export const vote = (id, content) => {
   return {
     type: 'ADD_VOTE',
-    data: { id }
+    data: { 
+      content, 
+      id 
+    },
   }
 }
