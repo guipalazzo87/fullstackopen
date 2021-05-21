@@ -3,10 +3,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
 
 const AnecdoteList = () => {
+  let match = new Set()
 
-  const anecdotes = useSelector(({ anecdotes, notification }) => {
-    return anecdotes
+  const anecdotes = useSelector(({ anecdotes, notification, filter }) => {
+    if (filter) {
+      const re = new RegExp(`(.+)?${filter}(.+)?`, 'i')
+      for (let i = 0; i < Object.keys(anecdotes).length; i++) {
+        if (anecdotes[i].content.search(re) !== -1) {
+          match.add(anecdotes[i])
+        }
+      }
+      const array = Array.from(match)
+      match.clear()
+      return array
+    } else {
+      return anecdotes
+    }
   })
+
 
   const dispatch = useDispatch()
 
