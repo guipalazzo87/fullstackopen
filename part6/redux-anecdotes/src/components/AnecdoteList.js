@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
 
+
 const AnecdoteList = () => {
   let match = new Set()
 
@@ -21,11 +22,11 @@ const AnecdoteList = () => {
     }
   })
 
-
   const dispatch = useDispatch()
 
-  const clickHandler = (anecdote) => {
-    dispatch(vote(anecdote.id, anecdote.content))
+  const clickHandler = async (anecdote) => {
+    
+    dispatch(vote(anecdote))
     setTimeout(() => {
       dispatch({ type: 'HIDE_NOTIFICATION' })
     }, 5000)

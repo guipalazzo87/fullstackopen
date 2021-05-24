@@ -8,12 +8,15 @@ const Notification = () => {
   const notification = useSelector(({ anecdotes, notification }) => {
     if (notification.length === 0) {
       style = { display: 'none' }
+      notification = null
     } else {
       style = {
         border: 'solid',
         padding: 10,
         borderWidth: 1,
       }
+      return `${notification[0]} ${notification[1]}`
+
     } return notification
   })
 
