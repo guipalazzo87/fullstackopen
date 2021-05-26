@@ -5,12 +5,8 @@ import { connect } from 'react-redux'
 
 
 const Notification = (props) => {
-  console.log(props.notification);
-
   let style = {}
-
   let notification = null
-
   if (props.notification.length === 0) {
     style = { display: 'none' }
     notification = null
@@ -36,7 +32,6 @@ const mapStateToProps = (state) => {
     notification: state.notification,
   }
 }
-
 
 const ConnectedNotification = connect(mapStateToProps)(Notification)
 

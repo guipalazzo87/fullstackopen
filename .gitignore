@@ -6,3 +6,4 @@ part4/blog-list-app/.env
 part4/blog-list-app/node_modules
 part6/redux-notes-part6-1
 part6/unicafe-redux/.env
+part6/redux-anecdotes/db.json

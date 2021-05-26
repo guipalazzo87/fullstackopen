@@ -11,11 +11,5 @@ const notificationReducer = (state = [], action) => {
     }
 }
 
-export const hide = () => {
-    return {
-      type: 'HIDE_NOTIFICATION'
-    }
-  }
-
 export default notificationReducer
 

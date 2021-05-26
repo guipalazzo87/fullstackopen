@@ -1,40 +1,34 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { vote } from '../reducers/anecdoteReducer'
+import { connect } from 'react-redux'
+import { vote, hideNotification } from '../reducers/anecdoteReducer'
 
 
-const AnecdoteList = () => {
+const AnecdoteList = (props) => {
+
   let match = new Set()
 
-  const anecdotes = useSelector(({ anecdotes, notification, filter }) => {
-    if (filter) {
-      const re = new RegExp(`(.+)?${filter}(.+)?`, 'i')
-      for (let i = 0; i < Object.keys(anecdotes).length; i++) {
-        if (anecdotes[i].content.search(re) !== -1) {
-          match.add(anecdotes[i])
-        }
-      }
-      const array = Array.from(match)
-      match.clear()
-      return array
-    } else {
-      return anecdotes
-    }
-  })
+  let anecdotes = props.anecdotes
 
-  const dispatch = useDispatch()
+  if (props.filter) {
+    const re = new RegExp(`(.+)?${props.filter}(.+)?`, 'i')
+    for (let i = 0; i < Object.keys(props.anecdotes).length; i++) {
+      if (props.anecdotes[i].content.search(re) !== -1) {
+        match.add(props.anecdotes[i])
+      }
+    }
+    const array = Array.from(match)
+    match.clear()
+    anecdotes = array
+  } 
 
   const clickHandler = async (anecdote) => {
-    
-    dispatch(vote(anecdote))
-    setTimeout(() => {
-      dispatch({ type: 'HIDE_NOTIFICATION' })
-    }, 5000)
+    props.vote(anecdote)
+    props.hideNotification()
   }
 
   return (
     <div>
-      {anecdotes.map(anecdote =>
+      {anecdotes && anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
             {anecdote.content}
@@ -51,4 +45,18 @@ const AnecdoteList = () => {
   )
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+  return {
+    filter: state.filter,
+    anecdotes: state.anecdotes
+  }
+}
+const mapDispatchToProps = {
+  vote,
+  hideNotification,
+}
+
+
+const ConnectedAnecdoteList = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)
+
+export default ConnectedAnecdoteList

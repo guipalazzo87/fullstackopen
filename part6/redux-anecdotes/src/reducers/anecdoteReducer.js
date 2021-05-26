@@ -36,6 +36,27 @@ export const createAnecdote = (anecdote) => {
   }
 }
 
+export const hideNotification = () => {
+  return async dispatch => {
+    
+    function hideDispatch() {
+      return (
+        dispatch({ type: 'HIDE_NOTIFICATION' })
+      )
+    }
+    
+    function startTimer() {
+      timer = window.setTimeout(hideDispatch, 5000)
+    }
+    
+    var timer = null
+
+    window.clearTimeout(timer)
+    startTimer();
+    
+  }
+}
+
 
 export const vote = (anecdote) => {
   return async dispatch => {

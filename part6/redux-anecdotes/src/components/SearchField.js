@@ -1,15 +1,13 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { filterChange } from '../reducers/filterReducer'
 
-const SearchField = () => {
-
-  const dispatch = useDispatch()
+const SearchField = (props) => {
 
   const handleChange = (event) => {
     event.preventDefault()
     const search = event.target.value
-    dispatch(filterChange(search))
+    props.filterChange(search)
   }
 
   const style = {
@@ -27,4 +25,16 @@ const SearchField = () => {
   )
 }
 
-export default SearchField
+const mapStateToProps = (state) => {
+  return {
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = { 
+  filterChange,
+}
+
+const ConnectedSearchField = connect(mapStateToProps,mapDispatchToProps)(SearchField)
+
+export default ConnectedSearchField
