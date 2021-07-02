@@ -44,10 +44,13 @@ const Results = (props) => {
     if (match.length === 1) {
       props.setMatch(match[0])
     }
+    if (match.length !== 1) {
+      props.setMatch('')
+    }
   }
 
-  useEffect(hook2, )
-  
+  useEffect(hook2,)
+
 
   if (match.length > 1) {
     return (
@@ -94,25 +97,28 @@ const Results = (props) => {
 }
 
 const Weather = (props) => {
-  
+
   const match = props.match
-  
+
   const hook = () => {
     const access_key = props.api_key
     const query = props.match.capital
-        
+
     axios
       .get(`http://api.weatherstack.com/current?access_key=${access_key}&query=${query}`)
       .then(response => {
-        props.setWeather(response.data)
+        props.setWeather(response.data.current)
       })
   }
-  useEffect(hook,[])
-      
+
+  useEffect(hook, [])
+
   return (
     <div>
       <h2>weather in {props.match.capital}</h2>
-      <p>temperature: {}}</p>
+      <p>Temperature {props.weather.temperature}°C</p>
+      <p>Feels like {props.weather.feelslike}°C </p>
+      <img src={props.weather.weather_icons} />
       
     </div>
   )
@@ -144,12 +150,13 @@ const App = () => {
         setMatch={setMatch}
       />
 
-      <Weather
-        match={match}
-        api_key={api_key}
-        weather={weather}
-        setWeather={setWeather}
-      />
+      {match.area && <Weather
+          match={match}
+          api_key={api_key}
+          weather={weather}
+          setWeather={setWeather}
+        />
+      }
     </>
   )
 }
