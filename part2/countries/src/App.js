@@ -51,6 +51,11 @@ const Results = (props) => {
 
   useEffect(hook2,)
 
+  const clear = () => {
+    props.setSearch('')
+    props.setWeather('')
+  }
+
 
   if (match.length > 1) {
     return (
@@ -69,6 +74,7 @@ const Results = (props) => {
 
     return (
       <div>
+        <button onClick={clear}>Clear</button>
         <h1>{match[0].name}</h1>
         capital {match[0].capital} <br />
         population {match[0].population}
@@ -113,15 +119,25 @@ const Weather = (props) => {
 
   useEffect(hook, [])
 
-  return (
-    <div>
-      <h2>weather in {props.match.capital}</h2>
-      <p>Temperature {props.weather.temperature}°C</p>
-      <p>Feels like {props.weather.feelslike}°C </p>
-      <img src={props.weather.weather_icons} />
-      
-    </div>
-  )
+  if (props.match.capital && props.weather.temperature && props.weather.feelslike) {
+    return (
+      <div>
+        <h2>weather in {props.match.capital ? props.match.capital : 'N/A'}</h2>
+        <p>Temperature {props.weather.temperature ? props.weather.temperature + '°C' : 'N/A'}</p>
+        <p>Feels like {props.weather.feelslike ? props.weather.feelslike + '°C' : 'N/A'} </p>
+        <img src={props.weather.weather_icons} />
+        
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h2>Weather details not available</h2>
+      </div>
+    )
+  }
+
+  
 }
 
 
@@ -148,6 +164,8 @@ const App = () => {
         setResult={setResult}
         match={match}
         setMatch={setMatch}
+        setWeather={setWeather}
+
       />
 
       {match.area && <Weather
